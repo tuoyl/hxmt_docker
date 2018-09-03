@@ -23,9 +23,9 @@ export PATH=$ASTROSOFT/tempo/bin:$ASTROSOFT/tempo2/bin:$ASTROSOFT/pgplot:$PATH
 #export HEADAS=$HOME/astrosoft/ftools/x86_64-pc-linux-gnu-libc2.12
 export HEADAS=$HOME/astrosoft/hxmtsoft/x86_64-pc-linux-gnu-libc2.12
 export TEMPO2=$HOME/astrosoft/tempo2/
-export CALDB=$ASTROPFX/CALDB
-export CALDBALIAS=$ASTROPFX/CALDB/software/tools/alias_config.fits
-export CALDBCONFIG=$ASTROPFX/CALDB//caldb.config
+export CALDB=/home/hxmt/hxmt_packages/CALDB
+export CALDBALIAS=/home/hxmt/hxmt_packages/CALDB/software/tools/alias_config.fits
+export CALDBCONFIG=/home/hxmt/hxmt_packages/CALDB//caldb.config
 export LD_LIBRARY_PATH=$ASTROSOFT/pgplot
 
 ## Solve permissions issues
