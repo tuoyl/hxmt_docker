@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# docker setup script for MacOS 
+# docker setup script for Ubuntu
 
 #set -xe
 
