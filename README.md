@@ -1,11 +1,11 @@
 # hxmt_docker
 
-The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules. I developed it based on the FermiBottle dockerfile, so thank you Fermi team, you guys did an amazing job.
+The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules. 
 This page gives you a quick instruction on how to use our hxmtsoft container.
 
 # notice
 
-this dockerfile could not build a docker because some installation packages are too huge to upload.
+We didn't provide Dockerfile here. Some required installation packages are oversized to upload, so the dockerfile could not build successfully in any case.
 
 # Installation
 
@@ -16,18 +16,18 @@ This download may require a sign up to their community if you don't want to sign
 
 Our hxmtsoft container is hosted on DockerHub, which is a docker community where developers could publish their images to users.
 
-## Acquire the hxmtsoft image
+### Acquire the hxmtsoft image
 
 You can download the hxmtsoft image from DockerHub by doing
 ```
 docker pull ihepuni/hxmtsoft
 ```
 or you can get an image by a tar file provided by users who have already downloaded the image. This image is a compressed 5 Gigabyte file(I'm sorry I've added too much software to it). 
-This command pulls the image named hxmtsoft provided by developer ihepuni (that's me) from the DockerHub to your computer. You can also pull different version of the image by tagging it. For example, by doing 
+This command pulls the image named hxmtsoft provided by developer ihepuni (that's me) from the DockerHub to your computer. You can also pull a different version of the image by tagging it. For example, by doing 
 docker pull ihepuni/hxmtsoft:preliminary_0.1 
 you will pull the image that tagged with preliminary_0.1 to your system, the default pulling tag is named latest. You can check different tags which referred to different software version on [DockerHub](https://hub.docker.com/r/ihepuni/hxmtsoft/).
 
-## Check the local images
+### Check the local images
 ```
 docker images
 ```
@@ -67,7 +67,7 @@ ihepuni/hxmtsoft
 
 - For Windows
 
-Sorry, I don't have a Windows operating system, I don't know how it works. please google it and good luck.
+Sorry, I don't have a Windows operating system, I don't know how it works. Please google it and good luck.
 
 Now you create a hxmtsoft container, please run: docker ps -a you may see a new container created like this:
 ```
@@ -77,7 +77,7 @@ da2baa0d63b9        e287a2cf0031        "/bin/bash"              29 hours ago   
 
 CONTAINER ID, IMAGE ID, a startup script, and a randomly assigned name to a container are obtained. You can use the CONTAINER ID or the NAME to start your container.
 
-## Get started
+### Get started
 
 enter container as a root user
 ```
