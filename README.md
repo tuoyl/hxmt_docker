@@ -1,6 +1,6 @@
 # hxmt_docker
 
-The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules. 
+The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules.(https://hub.docker.com/r/ihepuni/hxmtsoft/)
 This page gives you a quick instruction on how to use our hxmtsoft container.
 
 # notice
@@ -15,6 +15,28 @@ This download may require a sign up to their community if you don't want to sign
 # Usage
 
 Our hxmtsoft container is hosted on DockerHub, which is a docker community where developers could publish their images to users.
+The easy way to use HXMT container is to execute the scripts *init_platform.sh* provided  for your operating system.
+
+- For MacOS
+```
+cd /the/folder/that/system/share/with/docker
+./init_macos.sh
+```
+
+- For Linux
+
+solve Permission problem
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+and execute script
+```
+cd /the/folder/that/system/share/with/docker
+./init_ubuntu.sh
+```
+
+What did we do by executing the script? Read the following tutorial.
 
 ### Acquire the hxmtsoft image
 
