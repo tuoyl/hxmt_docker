@@ -1,0 +1,80 @@
+USER_ID=${HOST_USER_ID:-9001}
+ #echo $HOST_USER_ID
+ #echo $USER_ID
+if [ `id -u` = 0 ]
+then
+    user_exists=$(id -u user > /dev/null 2>&1; echo $?)
+    if
+    [ $user_exists = 0 ]
+    then
+        useradd --shell /bin/bash -u $USER_ID -o -c "" -m hxmt
+        usermod -aG root hxmt
+        usermod -aG wheel hxmt
+    fi
+fi
+echo 'hxmt' | passwd hxmt --stdin >& /dev/null
+export HOME=/home/
+export USER=hxmt
+export LOGNAME=hxmt
+export MAIL=/var/spool/mail/hxmt
+export ASTROSOFT=$HOME/astrosoft
+export CONDAPFX=$ASTROSOFT/conda
+export PATH=$CONDAPFX/bin:$ASTROSOFT/bin:/usr/local/bin/rmfit_v432:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=$ASTROSOFT/tempo/bin:$ASTROSOFT/tempo2/bin:$ASTROSOFT/pgplot:$PATH
+export HEADAS=$HOME/astrosoft/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
+export TEMPO2=$HOME/astrosoft/tempo2/
+export CALDB=$HOME/astrosoft/hxmtsoft/CALDB
+export CALDBALIAS=$HOME/astrosoft/hxmtsoft/CALDB/software/tools/alias_config.fits
+export CALDBCONFIG=$HOME/astrosoft/hxmtsoft/CALDB//caldb.config
+export LD_LIBRARY_PATH=$ASTROSOFT/pgplot
+
+## Solve permissions issues
+#ln -s /home/astrosoft /home/hxmt/astrosoft
+#chown hxmt:hxmt $HOME/astrosoft
+#chown hxmt:hxmt $HOME
+cd $HOME
+
+if [ ! -f .bash_profile ]; then
+  echo "#################
+# Added by entrypoint at date: `date`
+# Environment variables
+export HOME=${HOME}
+export USER=${USER}
+export LOGNAME=${LOGNAME}
+export MAIL=${MAIL}
+export ASTROSOFT=${ASTROSOFT}
+export HEADAS=${HEADAS}
+export TEMPO2=${TEMPO2}
+#export FERMI_DIR=${FERMI_DIR}
+export PATH=${PATH}:\$PATH
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:\$LD_LIBRARY_PATH
+# Source the tools!
+. \$HEADAS/headas-init.sh
+" >> $HOME/.bash_profile
+fi
+
+# Aliases
+if [ ! -f .bashrc ]; then
+  echo "
+# Aliases
+alias notebook='jupyter notebook --ip 00.00.00.00 --no-browser'
+alias tempo2=$TEMPO2/bin/tempo2
+alias hxmtinit='. $HEADAS/headas-init.sh'
+
+" >> $HOME/.bashrc
+fi
+
+# Source everything that needs to be.
+. $HEADAS/headas-init.sh
+mkdir -p $HOME/pfiles
+#chown -R hxmt:hxmt $HOME/pfiles
+
+## Run whatever the user wants.
+echo "####################################################################"
+echo "###"
+echo "###   Welcome to the Insight-HXMT Container. Good luck & Have fun!"
+echo "###   Execute 'conda activate hxmt' to setup Python environment"
+echo "###   Execute 'hxmtinit' to initialize HXMT environment"
+echo "###"
+echo "####################################################################"
+echo ""
