@@ -4,9 +4,6 @@
 The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules.(https://hub.docker.com/r/ihepuni/hxmtsoft/)
 This page gives you a quick instruction on how to use our hxmtsoft container.
 
-# notice
-
-We didn't provide Dockerfile here. Some required installation packages are oversized to upload, so the dockerfile could not build successfully in any case.
 
 # Installation
 
