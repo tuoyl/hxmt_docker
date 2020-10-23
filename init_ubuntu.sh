@@ -5,7 +5,7 @@
 #set -xe
 
 echo "HXMT_VERSION == ${HXMT_VERSION:=latest}"
-echo "HXMT_DOCKER_IMAGE == ${HXMT_DOCKER_IMAGE:=ihepuni/hxmtsoft_v2.01:${HXMT_VERSION}}"
+echo "HXMT_DOCKER_IMAGE == ${HXMT_DOCKER_IMAGE:=ihepuni/hxmtsoft:${HXMT_VERSION}}"
 echo "HXMT_DOCKER_PULL == \"${HXMT_DOCKER_PULL:=yes}\""
 echo "DATA_DIRECTORY == ${DATA_DIRECTORY:=`pwd`}"
 [ "$HXMT_DOCKER_PULL" ==  "yes" ] && {

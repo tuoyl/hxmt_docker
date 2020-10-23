@@ -80,59 +80,6 @@ ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
 
 
 
-#ENV HEADAS $ASTROSOFT/hxmtsoft/x86_64-unknown-linux-gnu-libc2.12
-#COPY hxmtsrc /home/hxmtsrc
-#RUN source /home/hxmtsrc/setup_heasoft.sh && rm -rf /home/hxmtsrc && rm -f /home/hxmtsrc/setup_heasoft.sh
-#
-#
-## ScienceTools. Begin by setting some env vars, then
-## Running our setup script. Note that this will also upgrade
-## the version of python in the Sciencetools.
-##ENV STNAME ScienceTools-v11r5p3-fssc-20180124
-##ENV PLAT x86_64-unknown-linux-gnu-libc2.12
-##ENV STPFX $ASTROSOFT/sciencetools
-##COPY fermisrc /home/fermisrc
-##RUN sh /home/fermisrc/setup_sciencetools.sh && rm /home/fermisrc/setup_sciencetools.sh
-#
-#
-## pgplot. This should really be its own script.
-#RUN curl -L ftp://ftp.astro.caltech.edu/pub/pgplot/pgplot5.2.tar.gz > pgplot5.2.tar.gz &&\
-# tar zxvf pgplot5.2.tar.gz &&\
-# rm -rf /pgplot5.2.tar.gz &&\
-# mkdir -p $ASTROSOFT/pgplot &&\
-# cd $ASTROSOFT/pgplot &&\
-# cp /pgplot/drivers.list . &&\
-# sed -i -e '71s/!/ /g' drivers.list &&\
-# sed -i -e '72s/!/ /g' drivers.list &&\
-# /pgplot/makemake /pgplot linux g77_gcc &&\
-# sed -i -e 's/^FCOMPL=g77/FCOMPL=gfortran/g' makefile &&\
-# make && make cpg && make clean &&\
-# chmod -R g+rwx $ASTROSOFT/pgplot &&\
-# rm -rf /pgplot
-#
-### Tempo
-##COPY setup_tempo.sh /home/setup_tempo.sh
-##RUN sh /home/setup_tempo.sh && rm -f /home/setup_tempo.sh
-#
-## Tempo2
-#ENV TEMPO2 $ASTROSOFT/tempo2/T2runtime
-#COPY setup_tempo2.sh /home/setup_tempo2.sh
-#RUN sh /home/setup_tempo2.sh && rm -f /home/setup_tempo2.sh
-#
-### DS9
-##RUN mkdir $ASTROSOFT/bin &&\
-## cd $ASTROSOFT/bin &&\
-## curl http://ds9.si.edu/download/centos6/ds9.centos6.7.6.tar.gz | tar zxv
-##
-### RMFIT
-##RUN cd /usr/local/bin &&\
-##curl https://fermi.gsfc.nasa.gov/ssc/data/analysis/rmfit/rmfit_v432_64bit.tar.gz | tar zxv
-#
-### Conda
-#ENV CONDAPFX=$ASTROSOFT/conda
-#COPY setup_anaconda.sh /home/setup_anaconda.sh
-#RUN sh /home/setup_anaconda.sh && rm -f /home/setup_anaconda.sh
-
 
 
 
@@ -142,7 +89,6 @@ ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
 
 # Copy build products into a new Container / layer, specifically centos 6
 FROM sl:6
-#MAINTAINER "Fermi LAT Collaboration"
 
 # This is the default location of the shared directoy.
 VOLUME ["/data"]
@@ -159,14 +105,7 @@ ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
 
 # Copy all the important stuff from the builder into the final product.
 # Also, set the permissions to give the wheel group ownership.
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/ftools $ASTROSOFT/ftools
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/sciencetools $ASTROSOFT/sciencetools
 COPY --from=builder --chown=root:wheel $ASTROSOFT/hxmtsoft $ASTROSOFT/hxmtsoft
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/tempo $ASTROSOFT/tempo
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/pgplot $ASTROSOFT/pgplot
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/tempo2 $ASTROSOFT/tempo2
-#COPY --from=builder --chown=root:wheel $ASTROSOFT/bin $ASTROSOFT/bin
-#COPY --from=builder --chown=root:wheel /usr/local/bin/rmfit_v432 /usr/local/bin/rmfit_v432
 COPY --from=builder --chown=root:wheel $ASTROSOFT/conda $ASTROSOFT/conda
 
 # Now install a bunch of Yum packages, not the devel versions.
@@ -212,13 +151,6 @@ yum install -y \
   yum clean all && \
 rm -rf /var/cache/yum
 
-# Immigrate required files
-#COPY hxmt_packages /home/hxmt/hxmt_packages
-#RUN sh /home/hxmt/hxmt_packages/setup_package.sh && rm -f /home/hxmt/hxmt_packages/setup_package.sh
-#COPY hxmt_packages /home/astrosoft/hxmt_packages
-#COPY hxmt_packages/Bldspec /home/astrosoft/hxmt_packages/Bldspec
-#COPY hxmt_packages/CALDB /home/astrosoft/hxmt_packages/CALDB  
-#RUN sh /home/astrosoft/hxmt_packages/setup_package.sh && rm -f /home/astrosoft/hxmt_packages/setup_package.sh
 
 # Give members of the wheel group sudo access to execute all commands
 # Redundantly also give this access to the fermi user
