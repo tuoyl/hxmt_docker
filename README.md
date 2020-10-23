@@ -1,4 +1,4 @@
-ALERT: A new version of HXMT analysis software package(vesion 2.01) are published. We will not update the docker in repository ```ihepuni/hxmtsoft``` anymore. A new version of repository is ```ihepuni/hxmtsoft_v2.01```.
+
 # hxmt_docker
 
 The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules.(https://hub.docker.com/r/ihepuni/hxmtsoft/)
