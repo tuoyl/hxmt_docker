@@ -76,6 +76,26 @@ RUN sh $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm $ASTROSOFT/hxmtsoft/so
 ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
 ### NOTE: the HXMTsoft url and version should be flexible
 
+###################################################
+## HXMT CALDB
+COPY setup_caldb.sh $ASTROSOFT/hxmtsoft/
+RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm $ASTROSOFT/hxmtsoft/setup_caldb.sh
+ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
+ENV CALDBALIAS $ASTROSOFT/hxmtsoft/CALDB/software/tools/alias_config.fits
+ENV CALDBCONFIG $ASTROSOFT/hxmtsoft/CALDB//caldb.config
+###################################################
+
+
+
+#####################################################
+## Install Tempo2
+## 
+#RUN yum -y install pgplot
+RUN mkdir -p $ASTROSOFT/tempo2
+COPY setup_tempo2.sh $ASTROSOFT/tempo2/
+RUN sh $ASTROSOFT/tempo2/setup_tempo2.sh && rm  $ASTROSOFT/tempo2/setup_tempo2.sh
+#####################################################
+
 
 
 
@@ -102,11 +122,15 @@ CMD [ "/bin/bash" ]
 ENV ASTROSOFT /home/astrosoft
 RUN mkdir -p $ASTROSOFT
 ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
+ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
+ENV CALDBALIAS $ASTROSOFT/hxmtsoft/CALDB/software/tools/alias_config.fits
+ENV CALDBCONFIG $ASTROSOFT/hxmtsoft/CALDB//caldb.config
 
 # Copy all the important stuff from the builder into the final product.
 # Also, set the permissions to give the wheel group ownership.
 COPY --from=builder --chown=root:wheel $ASTROSOFT/hxmtsoft $ASTROSOFT/hxmtsoft
 COPY --from=builder --chown=root:wheel $ASTROSOFT/conda $ASTROSOFT/conda
+COPY --from=builder --chown=root:wheel $ASTROSOFT/tempo2 $ASTROSOFT/tempo2
 
 # Now install a bunch of Yum packages, not the devel versions.
 RUN sed -i '/tsflags=nodocs/d' /etc/yum.conf && \
