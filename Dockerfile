@@ -78,11 +78,12 @@ ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
 
 ###################################################
 ## HXMT CALDB
+#NOTE:caldb version is 2.02
 COPY setup_caldb.sh $ASTROSOFT/hxmtsoft/
 RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm $ASTROSOFT/hxmtsoft/setup_caldb.sh
-ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
-ENV CALDBALIAS $ASTROSOFT/hxmtsoft/CALDB/software/tools/alias_config.fits
-ENV CALDBCONFIG $ASTROSOFT/hxmtsoft/CALDB//caldb.config
+ENV CALDB $ASTROSOFT/hxmtsoft/CALDB2.02
+ENV CALDBALIAS $CALDB/software/tools/alias_config.fits
+ENV CALDBCONFIG $CALDB/caldb.config
 ###################################################
 
 
