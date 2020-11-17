@@ -1,7 +1,7 @@
 
 # hxmt_docker
 
-The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 2.7 and associated modules.(https://hub.docker.com/r/ihepuni/hxmtsoft/)
+The container in Dockerhub of HXMT software is called hxmtsoft, which pre-loaded with Ftools, hxmtsoft, tempo2, ds9, python 3.7 and associated modules.(https://hub.docker.com/r/ihepuni/hxmtsoft/)
 This page gives you a quick instruction on how to use our hxmtsoft container.
 
 
@@ -44,8 +44,8 @@ docker pull ihepuni/hxmtsoft
 ```
 or you can get an image by a tar file provided by users who have already downloaded the image. This image is a compressed 5 Gigabyte file(I'm sorry I've added too much software to it). 
 This command pulls the image named hxmtsoft provided by developer ihepuni (that's me) from the DockerHub to your computer. You can also pull a different version of the image by tagging it. For example, by doing 
-docker pull ihepuni/hxmtsoft:preliminary_0.1 
-you will pull the image that tagged with preliminary_0.1 to your system, the default pulling tag is named latest. You can check different tags which referred to different software version on [DockerHub](https://hub.docker.com/r/ihepuni/hxmtsoft/).
+docker pull ihepuni/hxmtsoft:2.02
+you will pull the image that tagged with "2.02" to your system, the default pulling tag is named latest. You can check different tags which referred to different software version on [DockerHub](https://hub.docker.com/r/ihepuni/hxmtsoft/).
 
 ### Check the local images
 ```

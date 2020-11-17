@@ -1,4 +1,4 @@
-FROM sl:6 as builder
+FROM centos:7 as builder
 
 LABEL maintainer="tuoyl@ihep.ac.cn"
 
@@ -66,24 +66,27 @@ RUN yum -y groupinstall "Development Tools"   &&\
                     python-devel              &&\
     yum -y install  libpng-devel              &&\
     yum -y install  vim tar wget which git curl bc &&\
+    yum -y install centos-release-scl && \
+    yum -y install devtoolset-7-gcc* && \
     yum clean all
+
 
 RUN mkdir -p $ASTROSOFT/hxmtsoft/source
 RUN mkdir -p $ASTROSOFT/hxmtsoft/install
-#RUN wget -O $ASTROSOFT/hxmtsoft/source/hxmtsoft_v2.03.tar.gz  http://www.hxmt.cn/u/cms/www/202005/hxmtsoftv2.03.tar.gz
 COPY setup_hxmtsoft.sh $ASTROSOFT/hxmtsoft/source/
 RUN sh $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm -rf rm $ASTROSOFT/hxmtsoft/source/*
-ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
+ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.17
 ### NOTE: the HXMTsoft url and version should be flexible
 
 ###################################################
 ## HXMT CALDB
 #NOTE:caldb version is 2.02
 COPY setup_caldb.sh $ASTROSOFT/hxmtsoft/
-RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm $ASTROSOFT/hxmtsoft/setup_caldb.sh
-ENV CALDB $ASTROSOFT/hxmtsoft/CALDB2.02
+RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm -rf $ASTROSOFT/hxmtsoft/setup_caldb.sh
+ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
 ENV CALDBALIAS $CALDB/software/tools/alias_config.fits
 ENV CALDBCONFIG $CALDB/caldb.config
+RUN rm -rf $ASTROSOFT/hxmtsoft/CALDB.tar
 ###################################################
 
 
@@ -94,7 +97,7 @@ ENV CALDBCONFIG $CALDB/caldb.config
 #RUN yum -y install pgplot
 RUN mkdir -p $ASTROSOFT/tempo2
 COPY setup_tempo2.sh $ASTROSOFT/tempo2/
-RUN sh $ASTROSOFT/tempo2/setup_tempo2.sh && rm  $ASTROSOFT/tempo2/setup_tempo2.sh
+RUN sh $ASTROSOFT/tempo2/setup_tempo2.sh && rm -rf $ASTROSOFT/tempo2/setup_tempo2.sh
 #####################################################
 
 
@@ -104,12 +107,12 @@ RUN sh $ASTROSOFT/tempo2/setup_tempo2.sh && rm  $ASTROSOFT/tempo2/setup_tempo2.s
 
 
 
- ##########################################################################
+###########################################################################
 #                     End Builder, Start final Product
 ##########################################################################
 
-# Copy build products into a new Container / layer, specifically centos 6
-FROM sl:6
+# Copy build products into a new Container / layer, specifically centos 7
+FROM centos:7
 
 # This is the default location of the shared directoy.
 VOLUME ["/data"]
@@ -122,7 +125,7 @@ CMD [ "/bin/bash" ]
 # Prepary the Environment of the new Container
 ENV ASTROSOFT /home/astrosoft
 RUN mkdir -p $ASTROSOFT
-ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.12
+ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.17
 ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
 ENV CALDBALIAS $ASTROSOFT/hxmtsoft/CALDB/software/tools/alias_config.fits
 ENV CALDBCONFIG $ASTROSOFT/hxmtsoft/CALDB//caldb.config
@@ -174,6 +177,8 @@ yum install -y \
   xorg-x11-apps \
   zlib-devel && \
   yum clean all && \
+  yum -y install centos-release-scl && \
+  yum -y install devtoolset-7-gcc* && \
 rm -rf /var/cache/yum
 
 
