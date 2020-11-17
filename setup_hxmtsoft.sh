@@ -4,13 +4,15 @@ cd $ASTROSOFT/hxmtsoft/source/
 export hversion=2.04
 echo `pwd`
 echo `ls`
+
 # careful about v_2.04 or v2.04
-wget -O hxmtsoftv$hversion.tar.gz http://www.hxmt.cn/u/cms/www/202011/hxmtsoftv2.04.tar.gz
+wget -q -O hxmtsoftv${hversion}.tar.gz http://www.hxmt.cn/u/cms/www/202011/hxmtsoftv2.04.tar.gz
 echo `ls`
-gunzip hxmtsoftv$hversion.tar.gz
-tar -xvf hxmtsoftv$hversion.tar
-cd $ASTROSOFT/hxmtsoft/source/hxmtsoftv$hversion/BUILD_DIR/
+gunzip hxmtsoftv${hversion}.tar.gz
+tar -xvf hxmtsoftv${hversion}.tar
+cd $ASTROSOFT/hxmtsoft/source/hxmtsoftv${hversion}/BUILD_DIR/
 #cd $ASTROSOFT/hxmtsoft/source/BUILD_DIR/
+
 make clean
 make distclean
 
