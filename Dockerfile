@@ -74,20 +74,20 @@ RUN yum -y groupinstall "Development Tools"   &&\
 RUN mkdir -p $ASTROSOFT/hxmtsoft/source
 RUN mkdir -p $ASTROSOFT/hxmtsoft/install
 COPY setup_hxmtsoft.sh $ASTROSOFT/hxmtsoft/source/
-RUN sh $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm -rf rm $ASTROSOFT/hxmtsoft/source/*
-ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.17
-### NOTE: the HXMTsoft url and version should be flexible
+#RUN sh $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm $ASTROSOFT/hxmtsoft/source/setup_hxmtsoft.sh && rm -rf rm $ASTROSOFT/hxmtsoft/source/*
+#ENV HEADAS $ASTROSOFT/hxmtsoft/install/x86_64-pc-linux-gnu-libc2.17
+#### NOTE: the HXMTsoft url and version should be flexible
 
 ###################################################
 ## HXMT CALDB
 #NOTE:caldb version is 2.02
 COPY setup_caldb.sh $ASTROSOFT/hxmtsoft/
-RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm -rf $ASTROSOFT/hxmtsoft/setup_caldb.sh
-ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
-ENV CALDBALIAS $CALDB/software/tools/alias_config.fits
-ENV CALDBCONFIG $CALDB/caldb.config
-RUN rm -rf $ASTROSOFT/hxmtsoft/CALDB.tar
-###################################################
+#RUN sh $ASTROSOFT/hxmtsoft/setup_caldb.sh && rm -rf $ASTROSOFT/hxmtsoft/setup_caldb.sh
+#ENV CALDB $ASTROSOFT/hxmtsoft/CALDB
+#ENV CALDBALIAS $CALDB/software/tools/alias_config.fits
+#ENV CALDBCONFIG $CALDB/caldb.config
+#RUN rm -rf $ASTROSOFT/hxmtsoft/CALDB.tar
+####################################################
 
 
 
@@ -175,6 +175,41 @@ yum install -y \
   wget \
   which \
   xorg-x11-apps \
+  epel-release \
+  tree     \
+  autoconf \
+  automake \
+  bzip2-devel \
+  emacs \
+  gcc \
+  gcc-c++ \
+  gcc-gfortran \
+  apt \
+  git \
+  libpng-devel \
+  libSM-devel \
+  libX11-devel \
+  libXdmcp-devel \
+  libXext-devel \
+  libXft-devel \
+  libXpm-devel \
+  libXrender-devel \
+  libXt-devel \
+  fftw \
+  make \
+  mesa-libGL-devel \
+  ncurses-devel \
+  openssl-devel \
+  patch \
+  perl \
+  perl-ExtUtils-MakeMaker \
+  readline-devel \
+  sqlite-devel \
+  sudo \
+  tar \
+  vim \
+  wget \
+  which \
   zlib-devel && \
   yum clean all && \
   yum -y install centos-release-scl && \
